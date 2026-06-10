@@ -1,0 +1,6 @@
+fastapi
+uvicorn
+sqlalchemy
+groq
+tiktoken
+sentence-transformers faiss-cpu

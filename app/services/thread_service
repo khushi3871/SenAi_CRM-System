@@ -1,0 +1,17 @@
+from sqlalchemy.orm import Session
+from app.models.email import Email
+
+
+def get_thread_history(db: Session, thread_id: str):
+    """
+    Returns all emails in a thread sorted by timestamp
+    """
+
+    emails = (
+        db.query(Email)
+        .filter(Email.thread_id == thread_id)
+        .order_by(Email.timestamp.asc())
+        .all()
+    )
+
+    return emails

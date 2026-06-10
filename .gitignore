@@ -11,3 +11,5 @@ senai_crm.db
 # IDE files
 .vscode/
 .idea/
+
+.env

@@ -1,5 +1,13 @@
-from sqlalchemy import Column, Integer, String, Text
+from sqlalchemy import (
+    Column,
+    Integer,
+    String,
+    Text,
+    Float,
+    Boolean
+)
 from app.db.database import Base
+
 
 class Email(Base):
     __tablename__ = "emails"
@@ -13,3 +21,10 @@ class Email(Base):
 
     timestamp = Column(String)
     thread_id = Column(String)
+
+    # AI Fields
+    category = Column(String)
+    sentiment_score = Column(Float)
+    urgency = Column(String)
+    requires_human = Column(Boolean)
+    confidence = Column(Float)

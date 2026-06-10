@@ -2,6 +2,7 @@ import json
 
 from app.db.database import SessionLocal
 from app.models.email import Email
+from app.services.email_service import enrich_email_with_ai
 
 
 def load_emails():
@@ -13,7 +14,6 @@ def load_emails():
         "r",
         encoding="utf-8"
     ) as f:
-
         emails = json.load(f)
 
     count = 0
@@ -41,9 +41,12 @@ def load_emails():
         )
 
         db.add(db_email)
-        count += 1
+        db.commit()
 
-    db.commit()
+        # AI enrichment
+        enrich_email_with_ai(db, db_email)
+
+        count += 1
 
     print(f"{count} emails loaded!")
 
