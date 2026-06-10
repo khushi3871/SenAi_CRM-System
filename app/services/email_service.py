@@ -90,19 +90,22 @@ def get_sentiment_trend(db, sender_email: str, days: int = 30):
     Returns sentiment trend data for a sender
     """
 
-    cutoff_date = datetime.utcnow() - timedelta(days=days)
-
     emails = (
         db.query(Email)
-        .filter(
-            Email.sender == sender_email,
-            Email.timestamp >= cutoff_date
-        )
+        .filter(Email.sender == sender_email)
         .order_by(Email.timestamp.asc())
         .all()
     )
 
     trend = []
+
+    for e in emails:
+        trend.append({
+            "timestamp": str(e.timestamp),
+            "sentiment_score": e.sentiment_score or 0
+        })
+
+    return trend
 
     for e in emails:
         trend.append({
@@ -196,3 +199,7 @@ def get_dashboard_stats(db):
         "escalated_count": escalated_count,
         "avg_sentiment": float(avg_sentiment or 0)
     }
+
+def debug_unique_senders(db):
+    senders = db.query(Email.sender).distinct().all()
+    return [s[0] for s in senders]
