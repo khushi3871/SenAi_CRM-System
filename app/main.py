@@ -1,9 +1,11 @@
 from fastapi import FastAPI
 from typing import Optional
+from app.agent.agent_controller import EmailAgent
 
 from app.db.database import engine, Base, SessionLocal
 
 from app.models.email import Email
+
 
 from app.services.load_emails import load_emails
 from app.services.email_service import (
@@ -99,3 +101,34 @@ def debug_senders():
 
 app.include_router(rag_router)
 app.include_router(analytics_router)
+@app.get("/agent/run/{email_id}")
+def run_agent(email_id: str):
+    db = SessionLocal()
+    try:
+        agent = EmailAgent()
+        return agent.run(db, email_id)
+    finally:
+        db.close()
+
+@app.post("/agent/dry-run/{email_id}")
+def dry_run_agent(email_id: str):
+
+    db = SessionLocal()
+
+    try:
+        agent = EmailAgent()
+        return agent.dry_run(db, email_id)
+
+    finally:
+        db.close()
+
+from fastapi.middleware.cors import CORSMiddleware
+
+app.add_middleware(
+    CORSMiddleware,
+    allow_origins=["http://localhost:5173"],
+    allow_credentials=True,
+    allow_methods=["*"],
+    allow_headers=["*"],
+)
+

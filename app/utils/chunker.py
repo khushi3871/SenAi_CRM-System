@@ -1,36 +1,68 @@
 import os
 
-def simple_chunk_text(text, chunk_size=200):
+
+def chunk_text(
+    text,
+    chunk_size=400,
+    overlap=50
+):
     """
-    Simple chunker (we will improve later if needed)
-    Splits text into fixed-size chunks
+    SenAI-compliant chunking:
+    - 300-500 tokens
+    - overlap support
     """
+
     words = text.split()
+
     chunks = []
 
-    for i in range(0, len(words), chunk_size):
-        chunk = " ".join(words[i:i + chunk_size])
+    start = 0
+
+    while start < len(words):
+
+        end = start + chunk_size
+
+        chunk = " ".join(words[start:end])
+
         chunks.append(chunk)
+
+        start += (chunk_size - overlap)
 
     return chunks
 
 
-def load_and_chunk_knowledge_base(folder_path="knowledge_base"):
+def load_and_chunk_knowledge_base(
+    folder_path="knowledge_base"
+):
+
     all_chunks = []
 
     for filename in os.listdir(folder_path):
-        if filename.endswith(".md"):
-            file_path = os.path.join(folder_path, filename)
 
-            with open(file_path, "r", encoding="utf-8") as f:
-                text = f.read()
+        if not filename.endswith(".md"):
+            continue
 
-            chunks = simple_chunk_text(text)
+        file_path = os.path.join(folder_path, filename)
 
-            for chunk in chunks:
-                all_chunks.append({
-                    "source": filename,
-                    "text": chunk
-                })
+        with open(
+            file_path,
+            "r",
+            encoding="utf-8"
+        ) as f:
+            text = f.read()
+
+        chunks = chunk_text(
+            text,
+            chunk_size=400,
+            overlap=50
+        )
+
+        for idx, chunk in enumerate(chunks):
+
+            all_chunks.append({
+    "source": filename,
+    "chunk_id": idx + 1,
+    "text": f"Document: {filename}\n\n{chunk}"
+})
 
     return all_chunks

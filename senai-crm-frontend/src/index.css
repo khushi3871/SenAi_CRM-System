@@ -1,0 +1,18 @@
+body {
+  margin: 0;
+  font-family: Inter, system-ui, Arial;
+  background: #f4f6f8;
+  color: #0f172a;
+}
+
+h1, h2, h3, p {
+  margin: 0;
+}
+
+a {
+  transition: 0.2s;
+}
+
+* {
+  box-sizing: border-box;
+}

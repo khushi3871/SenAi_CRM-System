@@ -107,14 +107,7 @@ def get_sentiment_trend(db, sender_email: str, days: int = 30):
 
     return trend
 
-    for e in emails:
-        trend.append({
-            "timestamp": e.timestamp,
-            "sentiment_score": e.sentiment_score or 0
-        })
-
-    return trend
-
+    
 def detect_negative_trend(db, sender_email: str, window: int = 3):
     """
     Detects if sender has consecutive negative sentiment trend
@@ -132,7 +125,7 @@ def detect_negative_trend(db, sender_email: str, window: int = 3):
     for e in emails:
         score = e.sentiment_score or 0
 
-        if score < -0.3:
+        if score <= -0.3:
             negative_streak += 1
         else:
             negative_streak = 0
