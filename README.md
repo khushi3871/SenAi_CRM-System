@@ -1,84 +1,232 @@
-# SenAI CRM System
+# SenAI CRM – AI-Powered Customer Intelligence Platform
 
-SenAI CRM is a backend-based Customer Relationship Management system built using **FastAPI** and **SQLite**.  
-It ingests email datasets, stores them in a structured database, and exposes REST APIs to manage and analyze email conversations.
+## Overview
 
----
+SenAI CRM is an AI-powered customer intelligence platform that combines Large Language Models (LLMs), Retrieval-Augmented Generation (RAG), Agentic AI, and CRM analytics to automate email understanding, customer risk detection, and business decision-making.
 
-## 🚀 Features
-
-### 📩 Email Management
-- Load email dataset into database
-- Fetch all emails
-- Retrieve single email by message_id
-
-### 🧵 Thread Management
-- View all conversation threads
-- Fetch complete email conversations by thread_id
-
-### 🔍 Filtering Support
-- Filter emails by sender
-- Filter emails by thread_id
-- Combined filtering support
+The system ingests customer emails, classifies them using AI, detects special business scenarios, retrieves relevant company policies using RAG, and provides actionable recommendations through an interactive dashboard.
 
 ---
 
-## 🏗️ Tech Stack
+## Key Features
 
-- FastAPI
-- SQLAlchemy
-- SQLite
-- Uvicorn
-- Python 3.10+
+### AI Email Intelligence
 
----
+* Automatic email classification
+* Sentiment analysis
+* Urgency detection
+* Human escalation prediction
+* Confidence scoring
 
-## 📡 API Endpoints
+Supported Categories:
 
-| Method | Endpoint | Description |
-|--------|----------|-------------|
-| GET | `/` | Health check |
-| POST | `/load-emails` | Load dataset into database |
-| GET | `/emails` | Get all emails |
-| GET | `/emails/{message_id}` | Get single email |
-| GET | `/threads` | Get all threads |
-| GET | `/threads/{thread_id}` | Get thread emails |
-
----
-
-## 🔄 Data Flow
-
-Email Dataset → Loader Service → SQLite DB → FastAPI → API Response
+* Inquiry
+* Complaint
+* Bug Report
+* Billing
+* Legal
+* Compliance
+* Security
+* Feature Request
+* Spam
+* Internal
 
 ---
 
-## 🧠 Future Enhancements
+### Multi-Tool AI Agent
 
-- AI-based email classification
-- Spam detection system
-- Sentiment analysis
-- Lead scoring system
-- Email summarization using LLMs
-- CRM analytics dashboard
+The system includes an autonomous AI agent capable of:
+
+* Analyzing customer sentiment history
+* Detecting churn risk
+* Reviewing category statistics
+* Generating business actions
+* Producing reasoning traces
+
+Agent Outputs:
+
+* AUTO_PROCESS
+* ESCALATE_TO_HUMAN
+* PRIORITY_REVIEW
 
 ---
 
-## 📌 Purpose
+### Special Scenario Detection
 
-This project demonstrates backend development skills including API design, database modeling, and scalable architecture, with future expansion into AI-powered CRM intelligence.
+The platform automatically detects:
+
+* GDPR Requests
+* Ransomware Threats
+* SLA Breaches
+* Customer Churn Risk
+
+Each scenario triggers predefined business actions and escalations.
 
 ---
 
-## ⚙️ Setup Instructions
+### Retrieval-Augmented Generation (RAG)
+
+The platform contains a knowledge base consisting of:
+
+* Refund Policies
+* SLA Policies
+* Escalation Rules
+* Compliance Guidelines
+* Pricing Policies
+
+Pipeline:
+
+Knowledge Base → Chunking → Embeddings → FAISS Vector Search → Retrieval
+
+Technologies:
+
+* Sentence Transformers
+* FAISS
+* Semantic Search
+
+---
+
+### Thread Intelligence
+
+* Conversation grouping by thread_id
+* Complete email timelines
+* Thread-level context analysis
+* Historical customer interaction tracking
+
+---
+
+### Analytics Dashboard
+
+Provides business insights such as:
+
+* Total Emails
+* Complaint Volume
+* Spam Detection Metrics
+* Escalation Statistics
+* Category Distribution
+* Customer Sentiment Trends
+
+---
+
+## System Architecture
+
+Email Dataset
+↓
+FastAPI Backend
+↓
+SQLite Database
+↓
+AI Classification Layer
+↓
+Hybrid AI Agent
+↓
+Special Scenario Engine
+↓
+RAG Knowledge Retrieval
+↓
+Analytics Engine
+↓
+React Dashboard
+
+---
+
+## Tech Stack
+
+### Backend
+
+* FastAPI
+* SQLAlchemy
+* SQLite
+* Python
+
+### AI / ML
+
+* Groq API
+* Llama 3.3 70B
+* Sentence Transformers
+* FAISS
+
+### Frontend
+
+* React
+* Vite
+* Recharts
+
+### Deployment
+
+* Docker
+* Docker Compose
+
+---
+
+## API Endpoints
+
+### Email APIs
+
+* GET /emails
+* GET /emails/{message_id}
+
+### Thread APIs
+
+* GET /threads
+* GET /threads/{thread_id}
+
+### Agent APIs
+
+* GET /agent/run/{email_id}
+* POST /agent/dry-run/{email_id}
+
+### Analytics APIs
+
+* GET /analytics/dashboard
+* GET /analytics/categories
+* GET /analytics/customer-risk/{sender}
+* GET /analytics/sentiment/{sender}
+
+### RAG APIs
+
+* GET /rag/search?q=...
+
+---
+
+## Setup Instructions
+
+### Backend
 
 ```bash
 pip install -r requirements.txt
+
 uvicorn app.main:app --reload
+```
 
-## 📸 API Documentation
+### Frontend
 
-![Swagger UI](assets/swagger.png)
+```bash
+npm install
 
-## 🏗️ Architecture Diagram
+npm run dev
+```
 
-![Architecture](assets/architecture.png)
+Backend:
+
+```text
+http://localhost:8000
+```
+
+Frontend:
+
+```text
+http://localhost:5173
+```
+
+---
+
+## Future Improvements
+
+* Thread-level summarization
+* Knowledge citations in agent responses
+* Multi-user authentication
+* PostgreSQL support
+* Production monitoring
+* Cloud deployment
+
