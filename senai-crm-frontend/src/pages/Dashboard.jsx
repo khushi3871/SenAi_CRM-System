@@ -56,8 +56,16 @@ export default function Dashboard() {
     value: categoryMap[k]
   }));
 
-  const COLORS = ["#2563eb", "#ef4444", "#f59e0b", "#10b981", "#8b5cf6"];
-
+ const COLORS = [
+  "#3b82f6",
+  "#8b5cf6",
+  "#06b6d4",
+  "#10b981",
+  "#f59e0b",
+  "#ef4444",
+  "#ec4899",
+  "#6366f1"
+];
   // SENTIMENT
   const sentimentData = emails.map((e, i) => ({
     name: i + 1,
@@ -106,7 +114,13 @@ export default function Dashboard() {
           <h3>Category Distribution</h3>
           <ResponsiveContainer width="100%" height={280}>
             <PieChart>
-              <Pie data={categoryData} dataKey="value" outerRadius={90}>
+             <Pie
+  data={categoryData}
+  dataKey="value"
+  outerRadius={110}
+  innerRadius={55}
+  paddingAngle={3}
+>
                 {categoryData.map((_, i) => (
                   <Cell key={i} fill={COLORS[i % COLORS.length]} />
                 ))}
@@ -131,17 +145,95 @@ export default function Dashboard() {
         </div>
 
         {/* RISK */}
-        <div style={{ ...card, gridColumn: "span 2" }}>
-          <h3>Risk Distribution</h3>
-          <ResponsiveContainer width="100%" height={280}>
-            <BarChart data={riskData}>
-              <XAxis dataKey="name" />
-              <YAxis />
-              <Tooltip />
-              <Bar dataKey="value" fill="#ef4444" radius={[6,6,0,0]} />
-            </BarChart>
-          </ResponsiveContainer>
-        </div>
+       <div style={card}>
+  <h3 style={{ marginBottom: "20px" }}>
+    AI Risk Overview
+  </h3>
+
+  <ResponsiveContainer width="100%" height={280}>
+    <BarChart
+      data={riskData}
+      margin={{
+        top: 10,
+        right: 20,
+        left: 0,
+        bottom: 0
+      }}
+    >
+      <CartesianGrid
+        strokeDasharray="3 3"
+        vertical={false}
+      />
+
+      <XAxis dataKey="name" />
+
+      <YAxis />
+
+      <Tooltip />
+
+      <Bar
+        dataKey="value"
+        radius={[8, 8, 0, 0]}
+      >
+        <Cell fill="#22c55e" />
+        <Cell fill="#eab308" />
+        <Cell fill="#f97316" />
+        <Cell fill="#ef4444" />
+      </Bar>
+    </BarChart>
+  </ResponsiveContainer>
+</div>
+<div style={card}>
+  <h3>Customer Health Score</h3>
+
+  <div
+    style={{
+      display: "flex",
+      justifyContent: "center",
+      alignItems: "center",
+      height: "220px",
+      flexDirection: "column"
+    }}
+  >
+    <div
+      style={{
+        width: "140px",
+        height: "140px",
+        borderRadius: "50%",
+        background:
+          "conic-gradient(#10b981 0% 72%, #e5e7eb 72% 100%)",
+        display: "flex",
+        alignItems: "center",
+        justifyContent: "center"
+      }}
+    >
+      <div
+        style={{
+          width: "105px",
+          height: "105px",
+          borderRadius: "50%",
+          background: "white",
+          display: "flex",
+          alignItems: "center",
+          justifyContent: "center",
+          flexDirection: "column"
+        }}
+      >
+        <h2 style={{ margin: 0 }}>72%</h2>
+        <small>Healthy</small>
+      </div>
+    </div>
+
+    <p
+      style={{
+        marginTop: "15px",
+        color: "#64748b"
+      }}
+    >
+      Based on sentiment, complaints & escalations
+    </p>
+  </div>
+</div>
 
       </div>
     </div>

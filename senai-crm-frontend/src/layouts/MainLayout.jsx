@@ -13,7 +13,7 @@ export default function MainLayout() {
       {/* Sidebar */}
   <div style={{
   width: "260px",
-  background: "#0b1e44",
+  background: "#0e3a65d7",
   color: "white",
   padding: "24px",
   display: "flex",

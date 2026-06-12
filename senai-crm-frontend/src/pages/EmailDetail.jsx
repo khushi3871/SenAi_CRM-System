@@ -261,36 +261,102 @@ export default function EmailDetail() {
 )}
 
       {dryRunResult && (
-  <details style={card}>
-    <summary
+  <div style={card}>
+    <h3
       style={{
-        cursor: "pointer",
-        fontWeight: "600",
-        fontSize: "18px"
+        display: "flex",
+        alignItems: "center",
+        gap: "10px",
+        marginBottom: "20px"
       }}
     >
-      View Execution Plan
-    </summary>
+      Agent Thinking
+    </h3>
 
-    <div style={{ marginTop: "20px" }}>
-      {dryRunResult.planned_steps.map((step) => (
+    {dryRunResult.planned_steps.map((step, index) => (
+      <div
+        key={step.step}
+        style={{
+          marginBottom: "16px",
+          padding: "18px",
+          borderRadius: "14px",
+          background: "#f8fafc",
+          borderLeft: "4px solid #3b82f6",
+          transition: "0.2s"
+        }}
+      >
         <div
-          key={step.step}
           style={{
-            padding: "12px",
-            marginBottom: "10px",
-            borderRadius: "8px",
-            background: "#f8fafc",
-            border: "1px solid #e2e8f0"
+            display: "flex",
+            alignItems: "center",
+            gap: "10px",
+            marginBottom: "8px"
           }}
         >
-          <strong>Step {step.step}</strong>
-          <br />
-          {step.action}
+          <span
+            style={{
+              width: "28px",
+              height: "28px",
+              borderRadius: "50%",
+              background: "#dbeafe",
+              display: "flex",
+              alignItems: "center",
+              justifyContent: "center",
+              fontSize: "14px",
+              fontWeight: "600"
+            }}
+          >
+            ✓
+          </span>
+
+          <strong>
+            Step {step.step}
+          </strong>
         </div>
-      ))}
+
+        <p
+          style={{
+            margin: 0,
+            color: "#475569",
+            lineHeight: "1.6"
+          }}
+        >
+          {step.action}
+        </p>
+      </div>
+    ))}
+
+    <div
+      style={{
+        marginTop: "25px",
+        padding: "18px",
+        borderRadius: "14px",
+        background: "#eff6ff",
+        border: "1px solid #bfdbfe"
+      }}
+    >
+      <h4
+        style={{
+          marginTop: 0,
+          color: "#1e40af"
+        }}
+      >
+        Final Decision
+      </h4>
+
+      <p
+        style={{
+          marginBottom: 0,
+          color: "#334155"
+        }}
+      >
+        Agent has completed planning and is ready
+        to evaluate sender history, risk profile,
+        category distribution and generate a final
+        recommendation.
+      </p>
     </div>
-  </details>
+  </div>
 )}
     </div>
   );
